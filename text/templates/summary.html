@@ -1,0 +1,28 @@
+<!-- summary.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Textify | Summary</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='uploads/style.css') }}">
+</head>
+<body>
+  <header>Textify Summary</header>
+
+  <div class="container">
+    <h2> AI Generated Summary</h2>
+    <div class="summary-box">
+      <pre>{{ summary }}</pre>
+    </div>
+
+    <h2>Original Extracted Text</h2>
+    <div class="text-box">
+      <pre>{{ original }}</pre>
+    </div>
+
+    <div class="buttons">
+      <a href="{{ url_for('upload_image') }}">Go Back to Upload</a>
+    </div>
+  </div>
+</body>
+</html>

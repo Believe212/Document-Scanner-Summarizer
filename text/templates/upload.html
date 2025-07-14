@@ -1,0 +1,58 @@
+<!-- upload.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Textify | Upload</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='uploads/style.css') }}">
+  <script>
+    function showFileNames(input) {
+      const fileList = document.getElementById('file-names');
+      fileList.innerHTML = '';
+      for (let i = 0; i < input.files.length; i++) {
+        const li = document.createElement('li');
+        li.textContent = input.files[i].name;
+        fileList.appendChild(li);
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="title">Textify - Extract Text from Image</div>
+
+    {% if not results %}
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="upload-box">
+          <label for="file-upload" class="custom-file-upload">
+            📷 Choose Image(s)
+          </label>
+          <input id="file-upload" type="file" name="images" accept="image/*" multiple required onchange="showFileNames(this)"/>
+          <ul id="file-names" class="file-name-list"></ul>
+          <br />
+          <button type="submit" class="btn">Upload & Extract Text</button>
+        </div>
+      </form>
+    {% endif %}
+
+    {% if results %}
+      {% for result in results %}
+        <div class="image-preview">
+          <h3>{{ result.filename }}</h3>
+          <img src="{{ url_for('static', filename='uploads/' + result.filename) }}" alt="Uploaded Image">
+          <textarea rows="10" readonly>{{ result.extracted_text }}</textarea>
+        </div>
+      {% endfor %}
+
+      <div class="buttons">
+        <a href="{{ url_for('print_document', filename=text_file) }}">⬇️ Download All Extracted Text</a>
+
+        <form action="/summarize" method="post" style="display: inline;">
+          <input type="hidden" name="full_text" value="{{ results | map(attribute='extracted_text') | join('\n\n') }}">
+          <button type="submit">Summarize Text</button>
+        </form>
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>

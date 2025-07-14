@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image to Text</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='uploads/style.css') }}">
+</head>
+<body>
+  <header>Image to Text OCR App</header>
+  <div class="container">
+    <h2>Select Images to Convert</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="images" accept="image/*" multiple required><br>
+      <button type="submit" class="btn">Upload & Extract Text</button>
+    </form>
+  </div>
+</body>
+</html>
